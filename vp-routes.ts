@@ -517,7 +517,7 @@ export function createVPRoutes(pool: Pool): Router {
     if (!VP_LIVE) return notLive(res);
     try {
       const userId = (req as any).userId;
-      const itemId = parseInt(req.params.id, 10);
+      const itemId = parseInt(req.params.id as string, 10);
       const { quantity } = req.body;
 
       if (!quantity || quantity < 1) {
@@ -559,7 +559,7 @@ export function createVPRoutes(pool: Pool): Router {
     if (!VP_LIVE) return notLive(res);
     try {
       const userId = (req as any).userId;
-      const itemId = parseInt(req.params.id, 10);
+      const itemId = parseInt(req.params.id as string, 10);
 
       // Verify item belongs to user's draft order
       const item = await queryOne(`
@@ -752,7 +752,7 @@ export function createVPRoutes(pool: Pool): Router {
     if (!VP_LIVE) return notLive(res);
     try {
       const userId = (req as any).userId;
-      const orderId = req.params.id;
+      const orderId = req.params.id as string;
 
       if (!isValidUuid(orderId)) {
         res.status(400).json({ ok: false, error: 'Invalid order ID' });
@@ -801,7 +801,7 @@ export function createVPRoutes(pool: Pool): Router {
     if (!VP_LIVE) return notLive(res);
     try {
       const userId = (req as any).userId;
-      const orderId = req.params.id;
+      const orderId = req.params.id as string;
 
       if (!isValidUuid(orderId)) {
         res.status(400).json({ ok: false, error: 'Invalid order ID' });
@@ -847,7 +847,7 @@ export function createVPRoutes(pool: Pool): Router {
   router.put('/admin/products/:id', requireAdmin, async (req: Request, res: Response) => {
     if (!VP_LIVE) return notLive(res);
     try {
-      const productId = parseInt(req.params.id, 10);
+      const productId = parseInt(req.params.id as string, 10);
       if (isNaN(productId)) {
         res.status(400).json({ ok: false, error: 'Invalid product ID' });
         return;
@@ -925,7 +925,7 @@ export function createVPRoutes(pool: Pool): Router {
   router.put('/admin/discounts/:id', requireAdmin, async (req: Request, res: Response) => {
     if (!VP_LIVE) return notLive(res);
     try {
-      const tierId = parseInt(req.params.id, 10);
+      const tierId = parseInt(req.params.id as string, 10);
       if (isNaN(tierId)) {
         res.status(400).json({ ok: false, error: 'Invalid discount tier ID' });
         return;

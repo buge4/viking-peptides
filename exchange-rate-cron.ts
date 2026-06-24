@@ -1,12 +1,8 @@
-/**
- * Viking Peptides — Exchange Rate Cache
- * Fetches TON/USD and USDT/USD every 5 minutes from CoinGecko
- * Stores in vp_exchange_rates table for frontend price conversion
- *
- * Integrated into the engine cron system (index.ts):
- *   import { fetchExchangeRates } from '../viking-peptides/exchange-rate-cron';
- *   cron.schedule('*/5 * * * *', fetchExchangeRates);
- */
+// Viking Peptides — Exchange Rate Cache
+// Fetches TON/USD and USDT/USD every 5 minutes from CoinGecko
+// Stores in vp_exchange_rates table for frontend price conversion
+// Usage: import { initExchangeRateCron, fetchExchangeRates } from './exchange-rate-cron';
+//        initExchangeRateCron(pool); cron.schedule('0/5 * * * *', fetchExchangeRates);
 
 import { Pool } from 'pg';
 

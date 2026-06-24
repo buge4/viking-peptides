@@ -5,6 +5,7 @@ import { productDetails } from '../data/productDetails'
 import { useCart } from '../context/CartContext'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
+import PeptideInfoGraphic from '../components/PeptideInfoGraphic'
 import { useState } from 'react'
 
 function slugify(name: string): string {
@@ -192,6 +193,9 @@ export default function ProductPage() {
             </div>
           </section>
         )}
+
+        {/* Science Infographic */}
+        <PeptideInfoGraphic slug={productSlug} category={product.category} />
 
         {/* Goes Well Together With */}
         {productPairings.length > 0 && (
