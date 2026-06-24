@@ -1,0 +1,268 @@
+/* ============================================================
+   VIKING PEPTIDES — Design System
+   Norse-themed peptide e-commerce. Gold/brown/charcoal palette.
+   Anti-AI: No Inter, no purple, no bento grid.
+   ============================================================ */
+
+/* --- Reset -------------------------------------------------- */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+body { margin: 0; background: var(--bg); color: var(--fg); font-family: var(--font-body); line-height: 1.6; }
+img { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+ul, ol { list-style: none; }
+
+/* --- Tokens ------------------------------------------------- */
+:root {
+  /* Palette — drawn from the product vial label */
+  --gold: #C5A55A;
+  --gold-light: #D4B96A;
+  --gold-dim: rgba(197, 165, 90, 0.12);
+  --gold-dark: #8B7330;
+  --brown: #8B4513;
+  --brown-light: #A0522D;
+  --brown-dim: rgba(139, 69, 19, 0.10);
+  --charcoal: #1A1611;
+  --charcoal-mid: #2A2319;
+  --charcoal-light: #3A3129;
+  --parchment: #F5F0E8;
+  --parchment-dim: #E8E0D4;
+  --cream: #FAF7F2;
+  --fg: #E8E0D4;
+  --fg-dim: rgba(232, 224, 212, 0.55);
+  --fg-muted: rgba(232, 224, 212, 0.7);
+  --bg: #0F0D0A;
+  --bg-card: #1A1611;
+  --bg-card-hover: #2A2319;
+  --border: rgba(197, 165, 90, 0.12);
+  --border-hover: rgba(197, 165, 90, 0.25);
+
+  /* Semantic */
+  --accent: var(--gold);
+  --accent-light: var(--gold-light);
+  --accent-dim: var(--gold-dim);
+  --danger: #C94444;
+  --success: #4A9D5B;
+
+  /* Typography — Cormorant Garamond for headings (editorial serif) */
+  --font-heading: 'Cormorant Garamond', 'Georgia', serif;
+  --font-body: 'Source Sans 3', 'Segoe UI', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'SF Mono', monospace;
+
+  /* Spacing */
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2.5rem;
+  --space-2xl: 4rem;
+  --space-3xl: 6rem;
+
+  /* Radius */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+
+  /* Transitions */
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --duration: 0.3s;
+}
+
+/* --- Typography --------------------------------------------- */
+h1, h2, h3, h4 {
+  font-family: var(--font-heading);
+  font-weight: 500;
+  line-height: 1.15;
+  color: var(--parchment);
+  letter-spacing: -0.01em;
+}
+
+h1 { font-size: clamp(2.5rem, 5vw, 4rem); }
+h2 { font-size: clamp(1.75rem, 3.5vw, 2.75rem); }
+h3 { font-size: clamp(1.25rem, 2vw, 1.5rem); }
+
+p { color: var(--fg-muted); font-size: 1rem; max-width: 65ch; }
+
+.label-caps {
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.text-gold { color: var(--gold); }
+.text-parchment { color: var(--parchment); }
+
+/* --- Layout ------------------------------------------------- */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 clamp(1.25rem, 4vw, 2.5rem);
+}
+
+.container-wide {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 clamp(1.25rem, 4vw, 2.5rem);
+}
+
+.section-spacing {
+  padding-top: clamp(4rem, 8vw, 8rem);
+  padding-bottom: clamp(4rem, 8vw, 8rem);
+}
+
+/* --- Card --------------------------------------------------- */
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  transition: border-color var(--duration) var(--ease),
+              background var(--duration) var(--ease),
+              transform var(--duration) var(--ease);
+}
+
+.card:hover {
+  border-color: var(--border-hover);
+  background: var(--bg-card-hover);
+  transform: translateY(-2px);
+}
+
+/* --- Buttons ------------------------------------------------ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.75rem;
+  border: none;
+  border-radius: var(--radius-md);
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--duration) var(--ease);
+  letter-spacing: 0.02em;
+}
+
+.btn-primary {
+  background: var(--gold);
+  color: var(--charcoal);
+}
+.btn-primary:hover {
+  background: var(--gold-light);
+  transform: translateY(-1px);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--parchment);
+  border: 1px solid var(--border-hover);
+}
+.btn-secondary:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+/* --- Divider ------------------------------------------------ */
+.divider {
+  height: 1px;
+  background: var(--border);
+  border: none;
+}
+
+.divider-gold {
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  border: none;
+}
+
+/* --- Badge -------------------------------------------------- */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.badge-gold {
+  background: var(--gold-dim);
+  color: var(--gold);
+  border: 1px solid rgba(197, 165, 90, 0.2);
+}
+
+.badge-research {
+  background: rgba(74, 157, 91, 0.1);
+  color: var(--success);
+  border: 1px solid rgba(74, 157, 91, 0.2);
+}
+
+/* --- Grid --------------------------------------------------- */
+.grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.25rem; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.25rem; }
+
+@media (max-width: 1024px) {
+  .grid-4 { grid-template-columns: repeat(2, 1fr); }
+  .grid-3 { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 640px) {
+  .grid-4, .grid-3, .grid-2 { grid-template-columns: 1fr; }
+}
+
+/* --- Animations --------------------------------------------- */
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.animate-fade-up {
+  animation: fade-up 0.6s var(--ease) both;
+}
+
+.animate-fade-in {
+  animation: fade-in 0.5s var(--ease) both;
+}
+
+.delay-1 { animation-delay: 0.1s; }
+.delay-2 { animation-delay: 0.2s; }
+.delay-3 { animation-delay: 0.3s; }
+.delay-4 { animation-delay: 0.4s; }
+.delay-5 { animation-delay: 0.5s; }
+
+/* --- Scrollbar ---------------------------------------------- */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--charcoal-light); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--gold-dark); }
+
+/* --- Norse decorative line ---------------------------------- */
+.norse-line {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.norse-line::before,
+.norse-line::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold-dim), transparent);
+}
+
+/* --- Selection ---------------------------------------------- */
+::selection {
+  background: var(--gold);
+  color: var(--charcoal);
+}
