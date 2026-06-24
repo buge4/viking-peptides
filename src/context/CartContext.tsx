@@ -20,14 +20,15 @@ const DISCOUNT_TIERS: DiscountTier[] = [
   { minQty: 10, pct: 20, label: 'Buy 10+ items, save 20%' },
 ]
 
-// Prices per spec (PNGWIN) — mirrors the DB seed data
+// Prices per spec in USD CENTS — mirrors DB seed data
+// Researched from peptide market (US suppliers, adjusted per mg)
 const SPEC_PRICES: Record<string, Record<string, number>> = {
-  semaglutide: { '5mg': 29900, '10mg': 49900, '15mg': 69900, '20mg': 89900, '30mg': 119900, '80mg': 279900 },
-  tirzepatide: { '10mg': 54900, '15mg': 74900, '20mg': 94900, '30mg': 129900, '40mg': 164900, '50mg': 194900, '60mg': 224900, '80mg': 289900, '120mg': 399900 },
-  retatrutide: { '5mg': 39900, '10mg': 69900, '20mg': 119900, '30mg': 169900, '40mg': 209900, '60mg': 299900, '80mg': 379900, '100mg': 449900 },
-  cagrilintide: { '5mg': 39900, '10mg': 69900 },
-  'retatrutide-cagrilintide': { '10mg (5mg + 5mg)': 79900 },
-  'cagrilintide-semaglutide': { '10mg (5mg + 5mg)': 69900 },
+  semaglutide: { '5mg': 2990, '10mg': 4990, '15mg': 6990, '20mg': 8990, '30mg': 11990, '80mg': 27990 },
+  tirzepatide: { '10mg': 5490, '15mg': 7490, '20mg': 9490, '30mg': 12990, '40mg': 16490, '50mg': 19490, '60mg': 22490, '80mg': 28990, '120mg': 39990 },
+  retatrutide: { '5mg': 3990, '10mg': 6990, '20mg': 11990, '30mg': 16990, '40mg': 20990, '60mg': 29990, '80mg': 37990, '100mg': 44990 },
+  cagrilintide: { '5mg': 3990, '10mg': 6990 },
+  'retatrutide-cagrilintide': { '10mg (5mg + 5mg)': 7990 },
+  'cagrilintide-semaglutide': { '10mg (5mg + 5mg)': 6990 },
   aod9604: { '2mg': 19900, '5mg': 34900, '10mg': 54900 },
   '5-amino-1mq': { '10mg x 10 vials': 89900 },
   'mots-c': { '10mg': 49900, '40mg': 149900 },

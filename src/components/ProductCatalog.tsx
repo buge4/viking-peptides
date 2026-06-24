@@ -53,7 +53,7 @@ function ProductCard({ product }: { product: Product }) {
         </div>
         {lowestPrice > 0 && (
           <span style={{ fontSize: '0.8rem', color: 'var(--gold)', fontWeight: 600, whiteSpace: 'nowrap', marginLeft: '0.5rem' }}>
-            From {(lowestPrice / 100).toFixed(0)}
+            From ${(lowestPrice / 100).toFixed(0)}
           </span>
         )}
       </div>

@@ -12,7 +12,7 @@ function slugify(name: string): string {
 }
 
 function formatPrice(price: number) {
-  return `${(price / 100).toLocaleString('en-US', { minimumFractionDigits: 2 })} PNGWIN`
+  return `$${(price / 100).toLocaleString('en-US', { minimumFractionDigits: 2 })}`
 }
 
 export default function CartPage() {

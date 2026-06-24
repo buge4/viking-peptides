@@ -32,7 +32,7 @@ export default function CategoryPage() {
     )
   }
 
-  const formatPrice = (price: number) => `${(price / 100).toLocaleString('en-US', { minimumFractionDigits: 2 })}`
+  const formatPrice = (price: number) => `$${(price / 100).toLocaleString('en-US', { minimumFractionDigits: 2 })}`
 
   return (
     <>
