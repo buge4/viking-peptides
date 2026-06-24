@@ -109,7 +109,7 @@ function isValidUuid(id: string): boolean {
 // Feature flag — set to true once vp_* migration has been applied
 // ---------------------------------------------------------------------------
 
-const VP_LIVE = false;
+const VP_LIVE = true;
 
 function notLive(res: Response): void {
   res.status(501).json({
@@ -701,6 +701,122 @@ export function createVPRoutes(pool: Pool): Router {
       await client.query('ROLLBACK');
       console.error('[VP] POST /orders error:', err.message);
       res.status(500).json({ ok: false, error: 'Failed to create order' });
+    } finally {
+      client.release();
+    }
+  });
+
+  // --- POST /orders/guest (guest checkout — no cart needed) ----------------
+  router.post('/orders/guest', async (req: Request, res: Response) => {
+    if (!VP_LIVE) return notLive(res);
+    const client = await pool.connect();
+    try {
+      const { email, full_name, shipping_address, notes, items } = req.body;
+
+      if (!email || !full_name) {
+        res.status(400).json({ ok: false, error: 'email and full_name are required' });
+        return;
+      }
+      if (!items || !Array.isArray(items) || items.length === 0) {
+        res.status(400).json({ ok: false, error: 'items array is required (each: { slug, spec, quantity })' });
+        return;
+      }
+
+      await client.query('BEGIN');
+
+      // Upsert guest customer
+      const custResult = await client.query(`
+        INSERT INTO vp_customers (email, display_name, is_guest)
+        VALUES ($1, $2, true)
+        ON CONFLICT (email) DO UPDATE SET display_name = EXCLUDED.display_name, updated_at = NOW()
+        RETURNING id
+      `, [email, full_name]);
+      const customerId = custResult.rows[0].id;
+
+      // Resolve items: look up product_id and spec_id from slugs
+      const resolvedItems: { product_id: string; spec_id: string; quantity: number; unit_price: number }[] = [];
+
+      for (const item of items) {
+        const product = await client.query(
+          `SELECT id FROM vp_products WHERE slug = $1`, [item.slug]
+        );
+        if (!product.rows[0]) {
+          await client.query('ROLLBACK');
+          res.status(400).json({ ok: false, error: `Product not found: ${item.slug}` });
+          return;
+        }
+
+        const spec = await client.query(
+          `SELECT id, price_usd_cents FROM vp_product_specs WHERE product_id = $1 AND spec_label = $2`,
+          [product.rows[0].id, item.spec]
+        );
+        if (!spec.rows[0]) {
+          await client.query('ROLLBACK');
+          res.status(400).json({ ok: false, error: `Spec not found: ${item.slug} / ${item.spec}` });
+          return;
+        }
+
+        resolvedItems.push({
+          product_id: product.rows[0].id,
+          spec_id: spec.rows[0].id,
+          quantity: Math.max(1, Math.min(100, parseInt(item.quantity) || 1)),
+          unit_price: parseInt(spec.rows[0].price_usd_cents),
+        });
+      }
+
+      // Calculate totals
+      let subtotalCents = 0;
+      let totalQuantity = 0;
+      for (const ri of resolvedItems) {
+        subtotalCents += ri.quantity * ri.unit_price;
+        totalQuantity += ri.quantity;
+      }
+
+      // Volume discount
+      const discountResult = await client.query(`
+        SELECT discount_pct FROM vp_discount_tiers
+        WHERE active = true AND min_quantity <= $1
+        ORDER BY min_quantity DESC LIMIT 1
+      `, [totalQuantity]);
+      const discountPct = discountResult.rows[0] ? parseFloat(discountResult.rows[0].discount_pct) : 0;
+      const discountCents = Math.round(subtotalCents * (discountPct / 100));
+      const totalCents = subtotalCents - discountCents;
+
+      // Create order (user_id NULL for guest orders, customer_id links to vp_customers)
+      const orderResult = await client.query(`
+        INSERT INTO vp_orders (user_id, customer_id, status, total_usd_cents, shipping_address, notes)
+        VALUES (NULL, $1, 'pending', $2, $3, $4)
+        RETURNING id
+      `, [customerId, totalCents, shipping_address ? JSON.stringify(shipping_address) : null, notes || null]);
+      const orderId = orderResult.rows[0].id;
+
+      // Insert order items
+      for (const ri of resolvedItems) {
+        await client.query(`
+          INSERT INTO vp_order_items (order_id, product_id, spec_id, quantity, unit_price_usd_cents)
+          VALUES ($1, $2, $3, $4, $5)
+        `, [orderId, ri.product_id, ri.spec_id, ri.quantity, ri.unit_price]);
+      }
+
+      await client.query('COMMIT');
+
+      res.status(201).json({
+        ok: true,
+        data: {
+          order_id: orderId,
+          customer_id: customerId,
+          status: 'pending',
+          subtotal_usd_cents: subtotalCents,
+          discount_pct: discountPct,
+          discount_usd_cents: discountCents,
+          total_usd_cents: totalCents,
+          item_count: totalQuantity,
+        },
+      });
+    } catch (err: any) {
+      await client.query('ROLLBACK');
+      console.error('[VP] POST /orders/guest error:', err.message);
+      res.status(500).json({ ok: false, error: 'Failed to create guest order' });
     } finally {
       client.release();
     }

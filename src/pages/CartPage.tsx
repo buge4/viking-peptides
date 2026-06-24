@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useCart } from '../context/CartContext'
 import { products } from '../data/products'
 import Header from '../components/Header'
@@ -16,6 +16,7 @@ function formatPrice(price: number) {
 }
 
 export default function CartPage() {
+  const navigate = useNavigate()
   const {
     items, removeItem, updateQuantity, clearCart,
     totalItems, subtotal, discount, discountAmount, total, nextTier, discountTiers,
@@ -165,8 +166,12 @@ export default function CartPage() {
                   </div>
                 )}
 
-                <button className="btn btn-primary" style={{ width: '100%', justifyContent: 'center', padding: '1rem' }}>
-                  Place Order
+                <button
+                  onClick={() => navigate('/checkout')}
+                  className="btn btn-primary"
+                  style={{ width: '100%', justifyContent: 'center', padding: '1rem' }}
+                >
+                  Proceed to Checkout
                 </button>
 
                 <p style={{ fontSize: '0.7rem', color: 'var(--fg-dim)', textAlign: 'center', marginTop: '1rem' }}>
