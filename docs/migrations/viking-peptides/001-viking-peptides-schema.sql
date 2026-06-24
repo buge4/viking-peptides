@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS vp_product_specs (
   id SERIAL PRIMARY KEY,
   product_id INT REFERENCES vp_products(id) ON DELETE CASCADE,
   spec_label TEXT NOT NULL,
-  price_pngwin BIGINT NOT NULL DEFAULT 0,
+  price_usd_cents BIGINT NOT NULL DEFAULT 0,
   sort_order INT DEFAULT 0
 );
 
@@ -57,7 +57,7 @@ CREATE TABLE IF NOT EXISTS vp_orders (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id UUID NOT NULL,
   status vp_order_status DEFAULT 'draft',
-  total_pngwin BIGINT DEFAULT 0,
+  total_usd_cents BIGINT DEFAULT 0,
   shipping_address JSONB,
   notes TEXT,
   hold_id TEXT,
@@ -71,7 +71,7 @@ CREATE TABLE IF NOT EXISTS vp_order_items (
   product_id INT REFERENCES vp_products(id),
   spec_id INT REFERENCES vp_product_specs(id),
   quantity INT DEFAULT 1,
-  unit_price BIGINT NOT NULL
+  unit_price_usd_cents BIGINT NOT NULL
 );
 
 CREATE INDEX idx_vp_products_category ON vp_products(category_id);

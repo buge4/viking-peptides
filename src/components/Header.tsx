@@ -96,6 +96,26 @@ export default function Header() {
           <Link to="/#products" className="btn btn-primary" style={{ padding: '0.5rem 1.25rem', fontSize: '0.8rem' }}>
             View Catalog
           </Link>
+
+          {/* Admin link — subtle, visible on hover */}
+          <Link
+            to="/admin"
+            className="admin-lock-link"
+            style={{
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              width: '28px', height: '28px', borderRadius: '50%',
+              opacity: 0, transition: 'opacity 0.3s, background 0.2s',
+              background: 'transparent',
+            }}
+            title="Admin"
+            onMouseEnter={(e) => e.currentTarget.style.background = 'var(--gold-dim)'}
+            onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
+          >
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--fg-dim)" strokeWidth="1.5">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+              <path d="M7 11V7a5 5 0 0110 0v4" />
+            </svg>
+          </Link>
         </nav>
 
         {/* Mobile menu button */}
@@ -143,6 +163,12 @@ export default function Header() {
         @media (max-width: 768px) {
           .desktop-nav { display: none !important; }
           .mobile-nav-right { display: flex !important; }
+        }
+        .desktop-nav:hover .admin-lock-link {
+          opacity: 0.4 !important;
+        }
+        .desktop-nav .admin-lock-link:hover {
+          opacity: 1 !important;
         }
       `}</style>
     </header>

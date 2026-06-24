@@ -1,5 +1,5 @@
 -- Viking Peptides Migration 003: Product specs with realistic prices + pairings
--- Prices in PNGWIN (1 PNGWIN = ~$0.001, so $50 = 50000 PNGWIN)
+-- Prices in USD cents (e.g. 2990 = $29.90)
 -- Prices researched from peptide suppliers, adjusted per mg amount
 
 BEGIN;
@@ -9,72 +9,72 @@ BEGIN;
 -- ============================================
 
 -- Semaglutide (market: ~$3-5/mg)
-INSERT INTO vp_product_specs (product_id, spec_label, price_pngwin, sort_order) VALUES
-((SELECT id FROM vp_products WHERE slug='semaglutide'), '5mg', 29900, 1),
-((SELECT id FROM vp_products WHERE slug='semaglutide'), '10mg', 49900, 2),
-((SELECT id FROM vp_products WHERE slug='semaglutide'), '15mg', 69900, 3),
-((SELECT id FROM vp_products WHERE slug='semaglutide'), '20mg', 89900, 4),
-((SELECT id FROM vp_products WHERE slug='semaglutide'), '30mg', 119900, 5),
-((SELECT id FROM vp_products WHERE slug='semaglutide'), '80mg', 279900, 6);
+INSERT INTO vp_product_specs (product_id, spec_label, price_usd_cents, sort_order) VALUES
+((SELECT id FROM vp_products WHERE slug='semaglutide'), '5mg', 2990, 1),
+((SELECT id FROM vp_products WHERE slug='semaglutide'), '10mg', 4990, 2),
+((SELECT id FROM vp_products WHERE slug='semaglutide'), '15mg', 6990, 3),
+((SELECT id FROM vp_products WHERE slug='semaglutide'), '20mg', 8990, 4),
+((SELECT id FROM vp_products WHERE slug='semaglutide'), '30mg', 11990, 5),
+((SELECT id FROM vp_products WHERE slug='semaglutide'), '80mg', 27990, 6);
 
 -- Tirzepatide (market: ~$4-6/mg)
-INSERT INTO vp_product_specs (product_id, spec_label, price_pngwin, sort_order) VALUES
-((SELECT id FROM vp_products WHERE slug='tirzepatide'), '10mg', 54900, 1),
-((SELECT id FROM vp_products WHERE slug='tirzepatide'), '15mg', 74900, 2),
-((SELECT id FROM vp_products WHERE slug='tirzepatide'), '20mg', 94900, 3),
-((SELECT id FROM vp_products WHERE slug='tirzepatide'), '30mg', 129900, 4),
-((SELECT id FROM vp_products WHERE slug='tirzepatide'), '40mg', 164900, 5),
-((SELECT id FROM vp_products WHERE slug='tirzepatide'), '50mg', 194900, 6),
-((SELECT id FROM vp_products WHERE slug='tirzepatide'), '60mg', 224900, 7),
-((SELECT id FROM vp_products WHERE slug='tirzepatide'), '80mg', 289900, 8),
-((SELECT id FROM vp_products WHERE slug='tirzepatide'), '120mg', 399900, 9);
+INSERT INTO vp_product_specs (product_id, spec_label, price_usd_cents, sort_order) VALUES
+((SELECT id FROM vp_products WHERE slug='tirzepatide'), '10mg', 5490, 1),
+((SELECT id FROM vp_products WHERE slug='tirzepatide'), '15mg', 7490, 2),
+((SELECT id FROM vp_products WHERE slug='tirzepatide'), '20mg', 9490, 3),
+((SELECT id FROM vp_products WHERE slug='tirzepatide'), '30mg', 12990, 4),
+((SELECT id FROM vp_products WHERE slug='tirzepatide'), '40mg', 16490, 5),
+((SELECT id FROM vp_products WHERE slug='tirzepatide'), '50mg', 19490, 6),
+((SELECT id FROM vp_products WHERE slug='tirzepatide'), '60mg', 22490, 7),
+((SELECT id FROM vp_products WHERE slug='tirzepatide'), '80mg', 28990, 8),
+((SELECT id FROM vp_products WHERE slug='tirzepatide'), '120mg', 39990, 9);
 
 -- Retatrutide (market: ~$5-8/mg, newer)
-INSERT INTO vp_product_specs (product_id, spec_label, price_pngwin, sort_order) VALUES
-((SELECT id FROM vp_products WHERE slug='retatrutide'), '5mg', 39900, 1),
-((SELECT id FROM vp_products WHERE slug='retatrutide'), '10mg', 69900, 2),
-((SELECT id FROM vp_products WHERE slug='retatrutide'), '20mg', 119900, 3),
-((SELECT id FROM vp_products WHERE slug='retatrutide'), '30mg', 169900, 4),
-((SELECT id FROM vp_products WHERE slug='retatrutide'), '40mg', 209900, 5),
-((SELECT id FROM vp_products WHERE slug='retatrutide'), '60mg', 299900, 6),
-((SELECT id FROM vp_products WHERE slug='retatrutide'), '80mg', 379900, 7),
-((SELECT id FROM vp_products WHERE slug='retatrutide'), '100mg', 449900, 8);
+INSERT INTO vp_product_specs (product_id, spec_label, price_usd_cents, sort_order) VALUES
+((SELECT id FROM vp_products WHERE slug='retatrutide'), '5mg', 3990, 1),
+((SELECT id FROM vp_products WHERE slug='retatrutide'), '10mg', 6990, 2),
+((SELECT id FROM vp_products WHERE slug='retatrutide'), '20mg', 11990, 3),
+((SELECT id FROM vp_products WHERE slug='retatrutide'), '30mg', 16990, 4),
+((SELECT id FROM vp_products WHERE slug='retatrutide'), '40mg', 20990, 5),
+((SELECT id FROM vp_products WHERE slug='retatrutide'), '60mg', 29990, 6),
+((SELECT id FROM vp_products WHERE slug='retatrutide'), '80mg', 37990, 7),
+((SELECT id FROM vp_products WHERE slug='retatrutide'), '100mg', 44990, 8);
 
 -- Cagrilintide
-INSERT INTO vp_product_specs (product_id, spec_label, price_pngwin, sort_order) VALUES
-((SELECT id FROM vp_products WHERE slug='cagrilintide'), '5mg', 39900, 1),
-((SELECT id FROM vp_products WHERE slug='cagrilintide'), '10mg', 69900, 2);
+INSERT INTO vp_product_specs (product_id, spec_label, price_usd_cents, sort_order) VALUES
+((SELECT id FROM vp_products WHERE slug='cagrilintide'), '5mg', 3990, 1),
+((SELECT id FROM vp_products WHERE slug='cagrilintide'), '10mg', 6990, 2);
 
 -- Combos
-INSERT INTO vp_product_specs (product_id, spec_label, price_pngwin, sort_order) VALUES
-((SELECT id FROM vp_products WHERE slug='retatrutide-cagrilintide'), '10mg (5mg + 5mg)', 79900, 1),
-((SELECT id FROM vp_products WHERE slug='cagrilintide-semaglutide'), '10mg (5mg + 5mg)', 69900, 1);
+INSERT INTO vp_product_specs (product_id, spec_label, price_usd_cents, sort_order) VALUES
+((SELECT id FROM vp_products WHERE slug='retatrutide-cagrilintide'), '10mg (5mg + 5mg)', 7990, 1),
+((SELECT id FROM vp_products WHERE slug='cagrilintide-semaglutide'), '10mg (5mg + 5mg)', 6990, 1);
 
 -- AOD9604
-INSERT INTO vp_product_specs (product_id, spec_label, price_pngwin, sort_order) VALUES
+INSERT INTO vp_product_specs (product_id, spec_label, price_usd_cents, sort_order) VALUES
 ((SELECT id FROM vp_products WHERE slug='aod9604'), '2mg', 19900, 1),
 ((SELECT id FROM vp_products WHERE slug='aod9604'), '5mg', 34900, 2),
 ((SELECT id FROM vp_products WHERE slug='aod9604'), '10mg', 54900, 3);
 
 -- 5-amino-1MQ
-INSERT INTO vp_product_specs (product_id, spec_label, price_pngwin, sort_order) VALUES
+INSERT INTO vp_product_specs (product_id, spec_label, price_usd_cents, sort_order) VALUES
 ((SELECT id FROM vp_products WHERE slug='5-amino-1mq'), '10mg x 10 vials', 89900, 1);
 
 -- MOTS-C
-INSERT INTO vp_product_specs (product_id, spec_label, price_pngwin, sort_order) VALUES
+INSERT INTO vp_product_specs (product_id, spec_label, price_usd_cents, sort_order) VALUES
 ((SELECT id FROM vp_products WHERE slug='mots-c'), '10mg', 49900, 1),
 ((SELECT id FROM vp_products WHERE slug='mots-c'), '40mg', 149900, 2);
 
 -- L-Carnitine
-INSERT INTO vp_product_specs (product_id, spec_label, price_pngwin, sort_order) VALUES
+INSERT INTO vp_product_specs (product_id, spec_label, price_usd_cents, sort_order) VALUES
 ((SELECT id FROM vp_products WHERE slug='l-carnitine'), '600mg x 10ml', 24900, 1);
 
 -- Lipo-C
-INSERT INTO vp_product_specs (product_id, spec_label, price_pngwin, sort_order) VALUES
+INSERT INTO vp_product_specs (product_id, spec_label, price_usd_cents, sort_order) VALUES
 ((SELECT id FROM vp_products WHERE slug='lipo-c'), '10ml', 29900, 1);
 
 -- Bulk compounds
-INSERT INTO vp_product_specs (product_id, spec_label, price_pngwin, sort_order) VALUES
+INSERT INTO vp_product_specs (product_id, spec_label, price_usd_cents, sort_order) VALUES
 ((SELECT id FROM vp_products WHERE slug='maritide'), '1g (bulk)', 1999900, 1),
 ((SELECT id FROM vp_products WHERE slug='vk2735'), '1g (bulk)', 1499900, 1),
 ((SELECT id FROM vp_products WHERE slug='eloralintide'), '10g (bulk)', 4999900, 1),
@@ -85,7 +85,7 @@ INSERT INTO vp_product_specs (product_id, spec_label, price_pngwin, sort_order) 
 -- SPECS WITH PRICES — Growth Hormone
 -- ============================================
 
-INSERT INTO vp_product_specs (product_id, spec_label, price_pngwin, sort_order) VALUES
+INSERT INTO vp_product_specs (product_id, spec_label, price_usd_cents, sort_order) VALUES
 ((SELECT id FROM vp_products WHERE slug='hgh-191aa'), '10iu', 29900, 1),
 ((SELECT id FROM vp_products WHERE slug='hgh-191aa'), '16iu', 44900, 2),
 ((SELECT id FROM vp_products WHERE slug='hgh-191aa'), '24iu', 59900, 3),
@@ -116,7 +116,7 @@ INSERT INTO vp_product_specs (product_id, spec_label, price_pngwin, sort_order) 
 -- SPECS WITH PRICES — Recovery & Healing
 -- ============================================
 
-INSERT INTO vp_product_specs (product_id, spec_label, price_pngwin, sort_order) VALUES
+INSERT INTO vp_product_specs (product_id, spec_label, price_usd_cents, sort_order) VALUES
 ((SELECT id FROM vp_products WHERE slug='bpc-157'), '5mg', 29900, 1),
 ((SELECT id FROM vp_products WHERE slug='bpc-157'), '10mg', 49900, 2),
 ((SELECT id FROM vp_products WHERE slug='tb500'), '5mg', 34900, 1),
@@ -135,7 +135,7 @@ INSERT INTO vp_product_specs (product_id, spec_label, price_pngwin, sort_order) 
 -- SPECS WITH PRICES — Cognitive
 -- ============================================
 
-INSERT INTO vp_product_specs (product_id, spec_label, price_pngwin, sort_order) VALUES
+INSERT INTO vp_product_specs (product_id, spec_label, price_usd_cents, sort_order) VALUES
 ((SELECT id FROM vp_products WHERE slug='selank'), '5mg', 29900, 1),
 ((SELECT id FROM vp_products WHERE slug='selank'), '10mg', 49900, 2),
 ((SELECT id FROM vp_products WHERE slug='semax'), '5mg', 29900, 1),
@@ -153,7 +153,7 @@ INSERT INTO vp_product_specs (product_id, spec_label, price_pngwin, sort_order) 
 -- SPECS WITH PRICES — Anti-Aging
 -- ============================================
 
-INSERT INTO vp_product_specs (product_id, spec_label, price_pngwin, sort_order) VALUES
+INSERT INTO vp_product_specs (product_id, spec_label, price_usd_cents, sort_order) VALUES
 ((SELECT id FROM vp_products WHERE slug='epitalon'), '10mg', 39900, 1),
 ((SELECT id FROM vp_products WHERE slug='epitalon'), '50mg', 149900, 2),
 ((SELECT id FROM vp_products WHERE slug='foxo4-dri'), '10mg', 299900, 1),
@@ -168,7 +168,7 @@ INSERT INTO vp_product_specs (product_id, spec_label, price_pngwin, sort_order) 
 -- SPECS WITH PRICES — Sexual Health
 -- ============================================
 
-INSERT INTO vp_product_specs (product_id, spec_label, price_pngwin, sort_order) VALUES
+INSERT INTO vp_product_specs (product_id, spec_label, price_usd_cents, sort_order) VALUES
 ((SELECT id FROM vp_products WHERE slug='pt-141'), '10mg', 34900, 1),
 ((SELECT id FROM vp_products WHERE slug='kisspeptin-10'), '5mg', 29900, 1),
 ((SELECT id FROM vp_products WHERE slug='kisspeptin-10'), '10mg', 49900, 2),
@@ -182,7 +182,7 @@ INSERT INTO vp_product_specs (product_id, spec_label, price_pngwin, sort_order) 
 -- SPECS WITH PRICES — Immune
 -- ============================================
 
-INSERT INTO vp_product_specs (product_id, spec_label, price_pngwin, sort_order) VALUES
+INSERT INTO vp_product_specs (product_id, spec_label, price_usd_cents, sort_order) VALUES
 ((SELECT id FROM vp_products WHERE slug='kpv'), '10mg', 34900, 1),
 ((SELECT id FROM vp_products WHERE slug='ll37'), '5mg', 39900, 1),
 ((SELECT id FROM vp_products WHERE slug='vip'), '10mg', 49900, 1),
@@ -195,7 +195,7 @@ INSERT INTO vp_product_specs (product_id, spec_label, price_pngwin, sort_order) 
 -- SPECS WITH PRICES — Cosmetic
 -- ============================================
 
-INSERT INTO vp_product_specs (product_id, spec_label, price_pngwin, sort_order) VALUES
+INSERT INTO vp_product_specs (product_id, spec_label, price_usd_cents, sort_order) VALUES
 ((SELECT id FROM vp_products WHERE slug='melanotan-1'), '10mg', 34900, 1),
 ((SELECT id FROM vp_products WHERE slug='melanotan-2'), '10mg', 24900, 1),
 ((SELECT id FROM vp_products WHERE slug='snap-8'), '10mg', 29900, 1),
@@ -206,7 +206,7 @@ INSERT INTO vp_product_specs (product_id, spec_label, price_pngwin, sort_order) 
 -- SPECS WITH PRICES — Supplies
 -- ============================================
 
-INSERT INTO vp_product_specs (product_id, spec_label, price_pngwin, sort_order) VALUES
+INSERT INTO vp_product_specs (product_id, spec_label, price_usd_cents, sort_order) VALUES
 ((SELECT id FROM vp_products WHERE slug='bacteriostatic-water'), '3ml x 10', 14900, 1),
 ((SELECT id FROM vp_products WHERE slug='bacteriostatic-water'), '10ml x 10', 24900, 2),
 ((SELECT id FROM vp_products WHERE slug='acetic-acid-water'), '3ml x 10', 16900, 1);

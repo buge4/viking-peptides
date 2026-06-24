@@ -338,4 +338,41 @@ INSERT INTO vp_discount_tiers (min_quantity, discount_pct, label) VALUES
 -- Admin-configurable pricing
 ALTER TABLE vp_product_specs ADD COLUMN IF NOT EXISTS admin_price_override BIGINT;
 
+-- ============================================
+-- EXCHANGE RATE CACHE
+-- ============================================
+
+CREATE TABLE IF NOT EXISTS vp_exchange_rates (
+  id SERIAL PRIMARY KEY,
+  pair TEXT NOT NULL,           -- e.g. 'TON_USD', 'USDT_USD'
+  rate NUMERIC(20,8) NOT NULL,
+  source TEXT DEFAULT 'coingecko',
+  fetched_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE INDEX idx_vp_exchange_rates_pair ON vp_exchange_rates(pair, fetched_at DESC);
+
+-- ============================================
+-- CUSTOMER AUTH
+-- ============================================
+
+CREATE TABLE IF NOT EXISTS vp_customers (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  email TEXT UNIQUE NOT NULL,
+  display_name TEXT,
+  password_hash TEXT,           -- null for guest checkout
+  is_guest BOOLEAN DEFAULT false,
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS vp_admin_users (
+  id SERIAL PRIMARY KEY,
+  user_id UUID NOT NULL,        -- references Supabase auth.users or vp_customers
+  email TEXT UNIQUE NOT NULL,
+  role TEXT DEFAULT 'admin',
+  assigned_by TEXT DEFAULT 'bjorn',
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
 COMMIT;
